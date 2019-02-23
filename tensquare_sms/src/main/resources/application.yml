@@ -1,0 +1,15 @@
+server:
+  port: 9009
+spring:
+  application:
+    name: tensuqare_sms
+  rabbitmq:
+    host: 192.168.5.5
+  redis:
+    host: 192.168.5.5
+ly:
+  sms:
+     appid : 1400181248 #你自己的accessKeyId
+     appkey : cff28a74dd1a27b51fc3582f9e02f0f8 #你自己的accessKeySecret
+     smsSign : libowen1 #签名名称
+     templateId : 272402 #模板名称
