@@ -5,7 +5,7 @@ spring:
     name: tensquare-user #指定服务名
   datasource:  
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.5.5:3306/tensquare_user?useUnicode=true&amp;characterEncoding=UTF8
+    url: jdbc:mysql://192.168.5.5:3306/tensquare_user?characterEncoding=UTF8
     username: root
     password: root
   redis:
