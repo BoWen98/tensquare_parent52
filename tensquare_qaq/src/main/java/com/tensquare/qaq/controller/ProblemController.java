@@ -13,6 +13,8 @@ import entity.PageResult;
 import entity.Result;
 import entity.StatusCode;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * 控制器层
  *
@@ -25,6 +27,9 @@ public class ProblemController {
 
     @Autowired
     private ProblemService problemService;
+
+    @Autowired
+    private HttpServletRequest httpServletRequest;
 
     @GetMapping("/newlist/{labelid}/{page}/{size}")
     public Result newList(@PathVariable String labelid,
@@ -104,6 +109,10 @@ public class ProblemController {
      */
     @RequestMapping(method = RequestMethod.POST)
     public Result add(@RequestBody Problem problem) {
+        String token = (String) httpServletRequest.getAttribute("claims_user");
+        if (token == null || "".equals(token)) {
+            return new Result(false, StatusCode.ACCESSERROR, "权限不足");
+        }
         problemService.add(problem);
         return new Result(true, StatusCode.OK, "增加成功");
     }
