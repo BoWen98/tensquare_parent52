@@ -36,6 +36,21 @@ public class UserController {
     @Autowired
     private JwtUtil jwtUtil;
 
+
+    /**
+     * 增加粉丝数
+     *
+     * @param userid
+     * @param x
+     */
+    @PutMapping("/{userid}/{friendid}/{x}")
+    public void updatefanscountandfollowcount(@PathVariable String userid,
+                             @PathVariable String friendid,
+                             @PathVariable int x) {
+        userService.updatefanscountandfollowcount(x, userid, friendid);
+    }
+
+
     /**
      * 用户登陆
      *
@@ -46,10 +61,10 @@ public class UserController {
         User userLogin = userService.login(user.getMobile(), user.getPassword());
         if (userLogin != null) {
             String token = jwtUtil.createJWT(userLogin.getId(), userLogin.getMobile(), "user");
-            Map<String,Object> mag = new HashMap<>();
-            mag.put("token",token);
-            mag.put("roles","user");
-            return new Result(true, StatusCode.OK, "登陆成功",mag);
+            Map<String, Object> mag = new HashMap<>();
+            mag.put("token", token);
+            mag.put("roles", "user");
+            return new Result(true, StatusCode.OK, "登陆成功", mag);
         } else {
             return new Result(false, StatusCode.LOGINERROR, "用户名或密码错误");
         }

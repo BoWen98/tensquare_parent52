@@ -2,6 +2,7 @@ package com.tensquare.qaq.controller;
 
 import java.util.Map;
 
+import com.tensquare.qaq.client.LabelClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,15 @@ public class ProblemController {
 
     @Autowired
     private HttpServletRequest httpServletRequest;
+
+    @Autowired
+    private LabelClient labelClient;
+
+    @GetMapping("/label/{labelid}")
+    public Result findLabelById(@PathVariable String labelid){
+        Result result = labelClient.findById(labelid);
+        return result;
+    }
 
     @GetMapping("/newlist/{labelid}/{page}/{size}")
     public Result newList(@PathVariable String labelid,

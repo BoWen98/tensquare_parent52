@@ -21,6 +21,7 @@ import org.springframework.http.HttpRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import org.springframework.transaction.annotation.Transactional;
 import util.IdWorker;
 
 import com.tensquare.user.dao.UserDao;
@@ -33,6 +34,7 @@ import util.JwtUtil;
  * @author Administrator
  */
 @Service
+@Transactional
 public class UserService {
 
     @Autowired
@@ -55,6 +57,12 @@ public class UserService {
 
     @Autowired
     private JwtUtil jwtUtil;
+
+
+    public void updatefanscountandfollowcount(int x, String userid, String friendid) {
+        userDao.updatefanscount(x, friendid);
+        userDao.updatefollowcount(x, userid);
+    }
 
     public User login(String mobile, String password) {
         User user = userDao.findByMobile(mobile);
@@ -146,7 +154,7 @@ public class UserService {
      */
     public void deleteById(String id) {
         String token = (String) httpServletRequest.getAttribute("claims_admin");
-        if (token == null || "".equals(token)){
+        if (token == null || "".equals(token)) {
             throw new RuntimeException("权限不足");
         }
         userDao.deleteById(id);
